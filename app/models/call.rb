@@ -25,7 +25,8 @@ class Call < ApplicationRecord
       to: payload[:to],
       call_control_id: payload[:call_control_id],
       call_leg_id: payload[:call_leg_id],
-      status: status
+      status: status,
+      direction: payload[:direction]
     )
   end
 
@@ -34,5 +35,13 @@ class Call < ApplicationRecord
     return false if new_status.nil? || self.status == new_status
     self.status = new_status
     self.save
+  end
+
+  def incoming?
+    direction == "incoming"
+  end
+
+  def outgoing?
+    direction == "outgoing"
   end
 end
