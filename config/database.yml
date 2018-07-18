@@ -1,0 +1,22 @@
+development: &default
+  adapter: postgresql
+  database: ivr_development
+  encoding: utf8
+  min_messages: warning
+  pool: <%= Integer(ENV.fetch("DB_POOL", 5)) %>
+  reaping_frequency: <%= Integer(ENV.fetch("DB_REAPING_FREQUENCY", 10)) %>
+  timeout: 5000
+
+test:
+  <<: *default
+  database: ivr_test
+
+production: &deploy
+  adapter: postgresql
+  encoding: utf8
+  database: ivr_production
+  min_messages: warning
+  reaping_frequency: <%= Integer(ENV.fetch("DB_REAPING_FREQUENCY", 10)) %>
+  pool: <%= [Integer(ENV.fetch("MAX_THREADS", 5)), Integer(ENV.fetch("DB_POOL", 5))].max %>
+  timeout: 5000
+  url:  <%= ENV.fetch("DATABASE_URL", "") %>

@@ -1,0 +1,80 @@
+#!/usr/bin/env ruby
+
+require 'securerandom'
+
+#######
+# RUN #
+
+raise "TELNYX_API_KEY not set. Set this environment variable to continue." unless ENV["TELNYX_API_KEY"]
+raise "TELNYX_API_SECRET not set. Set this environment variable to continue." unless ENV["TELNYX_API_SECRET"]
+raise "SUPPORT_PHONE_NUMER not set. Set this environment variable to continue." unless ENV["SUPPORT_PHONE_NUMBER"]
+
+environment = ENV["ENVIRONMENT"] || "staging"
+
+create_heroku_app(environment)
+set_heroku_rails_secrets(environment)
+set_heroku_telnyx_api_key(environment)
+set_heroku_telnyx_api_secret(environment)
+set_heroku_support_phone_number(environment)
+
+# END RUN #
+###########
+
+BEGIN {
+  def create_heroku_app(environment)
+    app_name = heroku_app_name_for(environment)
+
+    run_toolbelt_command "create #{app_name}", environment
+  end
+
+  def set_heroku_rails_secrets(environment)
+    run_toolbelt_command(
+      "config:add SECRET_KEY_BASE=#{generate_secret}",
+      environment,
+    )
+  end
+
+  def set_heroku_backup_schedule(environment)
+    run_toolbelt_command(
+      "pg:backups:schedule DATABASE_URL --at '10:00 UTC'",
+      environment,
+    )
+  end
+
+  def set_heroku_telnyx_api_key(environment)
+    run_toolbelt_command(
+      "config:add TELNYX_API_KEY=#{ENV["TELNYX_API_KEY"]}",
+      environment,
+    )
+  end
+
+  def set_heroku_telnyx_api_secret(environment)
+    run_toolbelt_command(
+      "config:add TELNYX_API_SECRET=#{ENV["TELNYX_API_SECRET"]}",
+      environment,
+    )
+  end
+
+  def set_heroku_support_phone_number(environment)
+    run_toolbelt_command(
+      "config:add SUPPORT_PHONE_NUMBER=#{ENV["SUPPORT_PHONE_NUMBER"]}",
+      environment,
+    )
+  end
+
+  def heroku_app_name
+    @heroku_app_name ||= ENV["APP_NAME"] || "ivr-#{SecureRandom.hex(4)}"
+  end
+
+  def heroku_app_name_for(environment)
+    "#{heroku_app_name}-#{environment}"
+  end
+
+  def generate_secret
+    SecureRandom.hex(64)
+  end
+
+  def run_toolbelt_command(command, environment)
+    `heroku #{command} --remote #{environment}`
+  end
+}
