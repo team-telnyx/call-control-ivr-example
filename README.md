@@ -1,5 +1,13 @@
 # Telnyx IVR Example
 
+## Telnyx Call Control
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=1rg5iawJapw
+" target="_blank"><img src="http://img.youtube.com/vi/1rg5iawJapw/0.jpg"
+alt="Telnyx Call Control" width="240" height="180" border="10" /></a>
+
+[Call Control Introduction (video)](https://www.youtube.com/watch?v=1rg5iawJapw&t=16s)
+
 ## How it works?
 
 This application demonstrates a simple interactive voice response (IVR) system,
