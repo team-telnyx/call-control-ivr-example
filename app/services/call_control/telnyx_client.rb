@@ -5,9 +5,6 @@ module CallControl
     headers "Accept" => "application/json"
 
     def initialize
-      Rails.logger.debug(ENV["TELNYX_API_KEY"])
-      Rails.logger.debug(ENV["TELNYX_API_SECRET"])
-
       @auth = {username: ENV["TELNYX_API_KEY"], password: ENV["TELNYX_API_SECRET"]}
     end
 
