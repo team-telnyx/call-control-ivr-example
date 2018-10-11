@@ -193,11 +193,15 @@ this through the [Mission Control Portal](https://portal.telnyx.com).
 ### Heroku Logs
 
 If you want more detailed logs for the POST interactions, please use a similar version of the command below
+
     % heroku logs -a unique_app_name -n 3000 > output.txt
 
 ### Ruby logs
 
-If you want to check out the ruby logs, cd into /call-control-ivr-example/log$
+If you want to check out the ruby logs
+
+cd into /call-control-ivr-example/log$
+
 and tail -f development.log
 
 ### Could not connect to server
