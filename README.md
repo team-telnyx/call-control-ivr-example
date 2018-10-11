@@ -38,12 +38,16 @@ instructing them to select an option by pressing a digit.
 
 ## Getting Started
 
-After you have cloned this repo, run this setup script to set up your machine
+After you have cloned this repo: 
+
+    % git clone https://github.com/team-telnyx/call-control-ivr-example.git
+
+run the below setup script to set up your machine
 with the necessary dependencies to run and test this app:
 
     % ./bin/setup
 
-It assumes you have a machine equipped with Ruby, Postgres, etc.
+It assumes you have a machine equipped with **Ruby**, **Postgres**, etc.
 
 If you want to deploy on heroku you also need to have installed and
 configured the [heroku cli](https://devcenter.heroku.com/articles/heroku-cli).
@@ -71,7 +75,9 @@ using the API by following the instructions in the
 ## Configuration
 In order to use the Telnyx API the following environment variables must be
 present. You can find these credential in the [Mission Control Portal](https://portal.telnyx.com)
-under the Auth section.
+under the [Auth section.](https://portal.telnyx.com/#/app/auth/services-auth) 
+
+Please use the Auth V2 Beta credentials
 
 ```
 TELNYX_API_KEY=my-telnyx-access-key
